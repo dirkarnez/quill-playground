@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="./quill-delta-to-html.0.12.1.min.js"></script>
+    <style>
+        #editor-container {
+            height: 375px;
+        }
+
+        .iframe-container {
+            overflow: hidden;
+            padding-top: 56.25%;
+            position: relative;
+        }
+
+        .iframe-container iframe {
+            border: 0;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="editor-container">
+    </div>
+    <br />
+    <div class="iframe-container">
+        <iframe id="renderer" style="border: none;"></iframe>
+    </div>
+    
+    <script>
+        var quill = new Quill('#editor-container', {
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ]
+            },
+            placeholder: 'Compose an epic...',
+            theme: 'snow'  // or 'bubble'
+
+        });
+
+        quill.on('text-change', function (delta, oldDelta, source) {
+
+            var iframe = document.getElementById("renderer");
+
+            var doc;
+
+            if (iframe.contentDocument) {
+                doc = iframe.contentDocument;
+            } else {
+                doc = iframe.contentWindow.document;
+            }
+
+            doc.body.innerHTML = new quillDeltaToHtml.QuillDeltaToHtmlConverter(quill.getContents().ops, {}).convert();
+
+            // if (source == 'api') {
+            //     console.log("An API call triggered this change.");
+            // } else if (source == 'user') {
+            //     console.log("A user action triggered this change.");
+            // }
+        });
+
+
+    </script>
+</body>
+
+</html>
