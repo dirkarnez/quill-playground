@@ -5,6 +5,10 @@ Based on https://codepen.io/quill/pen/KzZqZx (official)
 ### Notes
 - `quill-delta-to-html.0.12.1.min.js` is from [Release quill-delta-to-html.0.12.1.min.js · dirkarnez/webpack-umd-action](https://github.com/dirkarnez/webpack-umd-action/releases/tag/quill-delta-to-html.0.12.1)
 
+### TODOs
+- Image resize?
+  - https://plnkr.co/edit/gq708AOrSBOWSlHcFslG?p=preview&preview
+
 ### Reference
 - https://codepen.io/davelozier/pen/KMgNze
 - https://github.com/quilljs/awesome-quill
